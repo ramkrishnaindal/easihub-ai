@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EASIHUB Labs – AI for Enterprise Software</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&display=swap');
+    
+    body {
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #ffffff;
+      min-height: 100vh;
+      color: #1a1a1a;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    header {
+      background: rgba(255, 255, 255, 1);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      color: #4949fc;
+      letter-spacing: -0.02em;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .auth-buttons a {
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .login-btn {
+      color: #4949fc;
+      background: rgba(73, 73, 252, 0.1);
+    }
+
+    .signup-btn {
+      color: white;
+      background: #4949fc;
+      box-shadow: 0 4px 15px rgba(73, 73, 252, 0.3);
+    }
+
+    .signup-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(73, 73, 252, 0.4);
+    }
+
+    /* Main Content */
+    .main-content {
+      background: white;
+      border-radius: 0;
+      margin: 0;
+      padding: 60px 40px;
+      box-shadow: none;
+      backdrop-filter: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-content::before {
+      display: none;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #202124;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      font-size: 17px;
+      font-weight: 400;
+      color: #5f6368;
+      margin-bottom: 40px;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+
+    /* Search Box */
+    .search-container {
+      position: relative;
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 16px 60px 16px 20px;
+      border: 2px solid #e8eaed;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 400;
+      outline: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: rgba(255, 255, 255, 1);
+      backdrop-filter: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .search-box:focus {
+      border-color: #4949fc;
+      box-shadow: 0 0 0 4px rgba(73, 73, 252, 0.1), 0 4px 20px rgba(0, 0, 0, 0.1);
+      background: white;
+    }
+
+    .search-box::placeholder {
+      color: #9aa0a6;
+      font-weight: 400;
+    }
+
+    .paper-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background: #4949fc;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(73, 73, 252, 0.2);
+    }
+
+    .paper-icon:hover {
+      transform: translateY(-50%) scale(1.05);
+      background: #3333e6;
+      box-shadow: 0 4px 12px rgba(73, 73, 252, 0.3);
+    }
+
+    .paper-icon:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+
+    .paper-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    /* Feature Options */
+    .feature-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 1);
+      border: 1px solid #e8eaed;
+      border-radius: 12px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: none;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .feature-card:hover {
+      border-color: #4949fc;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(73, 73, 252, 0.1);
+    }
+
+    .feature-card.active {
+      border-color: #4949fc;
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0 2px 15px rgba(73, 73, 252, 0.08);
+    }
+
+    .feature-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .feature-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #202124;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .feature-icon {
+      font-size: 24px;
+    }
+
+    .expand-icon {
+      font-size: 20px;
+      color: #4949fc;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card.active .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    .feature-description {
+      color: #5f6368;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .feature-options-list {
+      display: none;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .feature-card.active .feature-options-list {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .option-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      margin-bottom: 4px;
+      background: rgba(248, 250, 252, 0.7);
+      border-radius: 4px;
+      border: 1px solid rgba(226, 232, 240, 0.6);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .option-item:hover {
+      background: rgba(241, 245, 249, 0.85);
+      border-color: rgba(203, 213, 225, 0.8);
+    }
+
+    .option-text {
+      font-size: 13px;
+      color: #475569;
+      font-weight: 400;
+      line-height: 1.2;
+      flex-grow: 1;
+    }
+
+    .option-arrow {
+      color: #4949fc;
+      font-size: 13px;
+      font-weight: 500;
+      margin-left: 8px;
+      transition: transform 0.15s ease;
+    }
+
+    .option-item:hover .option-arrow {
+      transform: translateX(1px);
+    }
+
+    /* Explore More Section */
+    .explore-more {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    .explore-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      cursor: pointer;
+      padding: 16px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      margin-bottom: 20px;
+    }
+
+    .explore-header:hover {
+      background: rgba(73, 73, 252, 0.05);
+    }
+
+    .explore-header h2 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0;
+    }
+
+    .explore-icon {
+      font-size: 24px;
+      color: #4949fc;
+      transition: transform 0.3s ease;
+    }
+
+    .explore-header.active .explore-icon {
+      transform: rotate(180deg);
+    }
+
+    .capabilities-container {
+      display: none;
+    }
+
+    .capabilities-container.active {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .capability-card {
+      background: transparent;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: left;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .capability-card:hover {
+      border-color: #4949fc;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(73, 73, 252, 0.1);
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    .capability-card.active {
+      border-color: #4949fc;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 15px rgba(73, 73, 252, 0.1);
+    }
+
+    .capability-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .capability-header h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .capability-header h3 span {
+      font-size: 20px;
+    }
+
+    .capability-expand {
+      font-size: 16px;
+      color: #4949fc;
+      transition: transform 0.3s ease;
+    }
+
+    .capability-card.active .capability-expand {
+      transform: rotate(180deg);
+    }
+
+    .capability-content p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .capability-options {
+      display: none;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(73, 73, 252, 0.1);
+    }
+
+    .capability-card.active .capability-options {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    .capability-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      margin-bottom: 4px;
+      background: rgba(248, 250, 252, 0.7);
+      border: 1px solid rgba(226, 232, 240, 0.6);
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: #475569;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .capability-option span {
+      flex-grow: 1;
+    }
+
+    .capability-option::after {
+      content: '→';
+      color: #4949fc;
+      font-size: 13px;
+      font-weight: 500;
+      transition: transform 0.15s ease;
+      margin-left: 8px;
+    }
+
+    .capability-option:hover {
+      background: rgba(241, 245, 249, 0.85);
+      border-color: rgba(203, 213, 225, 0.8);
+    }
+
+    .capability-option:hover::after {
+      transform: translateX(1px);
+    }
+
+    /* Bottom CTA */
+    .bottom-cta {
+      text-align: center;
+      background: linear-gradient(135deg, #4949fc 0%, #3333e6 100%);
+      color: white;
+      padding: 48px;
+      border-radius: 24px;
+      margin-top: 60px;
+      box-shadow: 0 10px 40px rgba(73, 73, 252, 0.2);
+    }
+
+    .bottom-cta h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .bottom-cta p {
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 28px;
+      opacity: 0.95;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 14px 28px;
+      background: white;
+      color: #4949fc;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(255, 255, 255, 0.4);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 36px;
+      }
+      
+      .hero p {
+        font-size: 18px;
+      }
+      
+      .feature-options {
+        grid-template-columns: 1fr;
+      }
+      
+      .capabilities-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .main-content {
+        padding: 40px 20px;
+        margin: 20px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">EASIHUB</div>
+        <div class="auth-buttons">
+          <a href="#" class="login-btn">Log In</a>
+          <a href="#" class="signup-btn">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="main-content">
+      <div class="hero">
+        <h1>AI Copilot for Enterprise Developers, Architects, and Consultants</h1>
+        <p>Ask technical questions, generate architectures, explore learning paths, or analyze enterprise documents with AI—all in one place.</p>
+        
+        <div class="search-container">
+          <input type="text" class="search-box" placeholder="e.g. How to integrate SAP with Salesforce? or Generate architecture for PLM-ERP">
+          <div class="paper-icon" onclick="handleSearch()">
+            <svg viewBox="0 0 24 24">
+              <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z" />
+            </svg>
+          </div>
+        </div>
+        
+        <!-- Sample Prompt Button -->
+        <div style="text-align:center; margin-top: 20px;">
+          <button onclick="document.querySelector('.search-box').value='Show me an ERP-PLM integration plan'; handleSearch();" 
+                  style="padding:12px 24px; background:#f8f9ff; color:#4949fc; border:1px solid #e8eaff; border-radius:8px; font-weight:500; cursor:pointer; font-size:14px; transition: all 0.2s ease;">
+            Try Sample: "ERP-PLM Integration Plan"
+          </button>
+        </div>
+        
+        <!-- Sign-in CTA -->
+        <div style="text-align:center; margin-top: 16px;">
+          <a href="#" style="color:#4949fc; text-decoration:none; font-weight:500; font-size:14px;">
+            Sign in to unlock advanced features like Copilot and Ask from Docs →
+          </a>
+        </div>
+      </div>
+
+      <div class="feature-options">
+        <div class="feature-card" onclick="toggleFeature(this)">
+          <div class="feature-header">
+            <div class="feature-title">
+              <span class="feature-icon">🔎</span>
+              Find Answers
+            </div>
+            <div class="expand-icon">▼</div>
+          </div>
+          <div class="feature-description">
+            Instantly search similar questions and solutions using our AI-powered search engine tailored to enterprise systems.
+          </div>
+          <div class="feature-options-list">
+            <div class="option-item" onclick="selectOption(event, 'Search SAP integration solutions')">
+              <div class="option-text">Search SAP integration solutions</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Find PLM implementation guides')">
+              <div class="option-text">Find PLM implementation guides</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Discover ERP best practices')">
+              <div class="option-text">Discover ERP best practices</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Explore architecture patterns')">
+              <div class="option-text">Explore architecture patterns</div>
+              <div class="option-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-card" onclick="toggleFeature(this)">
+          <div class="feature-header">
+            <div class="feature-title">
+              <span class="feature-icon">📘</span>
+              Ask from Docs
+            </div>
+            <div class="expand-icon">▼</div>
+          </div>
+          <div class="feature-description">
+            Ask questions directly from enterprise PDFs or articles like TOGAF, Aras admin guide, and more.
+          </div>
+          <div class="feature-options-list">
+            <div class="option-item" onclick="selectOption(event, 'Ask from TOGAF documentation')">
+              <div class="option-text">Ask from TOGAF documentation</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Query Aras admin guide')">
+              <div class="option-text">Query Aras admin guide</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Search SAP documentation')">
+              <div class="option-text">Search SAP documentation</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Upload custom enterprise docs')">
+              <div class="option-text">Upload custom enterprise docs</div>
+              <div class="option-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-card" onclick="toggleFeature(this)">
+          <div class="feature-header">
+            <div class="feature-title">
+              <span class="feature-icon">🤖</span>
+              Copilot
+            </div>
+            <div class="expand-icon">▼</div>
+          </div>
+          <div class="feature-description">
+            AI assistant that helps users post questions, configure workflows, or generate starter scripts.
+          </div>
+          <div class="feature-options-list">
+            <div class="option-item" onclick="selectOption(event, 'Generate integration workflows')">
+              <div class="option-text">Generate integration workflows</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Create API scripts')">
+              <div class="option-text">Create API scripts</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Configure system settings')">
+              <div class="option-text">Configure system settings</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Optimize technical questions')">
+              <div class="option-text">Optimize technical questions</div>
+              <div class="option-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-card" onclick="toggleFeature(this)">
+          <div class="feature-header">
+            <div class="feature-title">
+              <span class="feature-icon">🔍</span>
+              Smart Post
+            </div>
+            <div class="expand-icon">▼</div>
+          </div>
+          <div class="feature-description">
+            Improves user questions using AI: suggests better titles, adds tags, and organizes by software.
+          </div>
+          <div class="feature-options-list">
+            <div class="option-item" onclick="selectOption(event, 'Improve question title')">
+              <div class="option-text">Improve question title</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Add relevant tags')">
+              <div class="option-text">Add relevant tags</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Categorize by software')">
+              <div class="option-text">Categorize by software</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Suggest similar questions')">
+              <div class="option-text">Suggest similar questions</div>
+              <div class="option-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-card" onclick="toggleFeature(this)">
+          <div class="feature-header">
+            <div class="feature-title">
+              <span class="feature-icon">📚</span>
+              Learning Path
+            </div>
+            <div class="expand-icon">▼</div>
+          </div>
+          <div class="feature-description">
+            Get guided learning plans for mastering enterprise tools or roles.
+          </div>
+          <div class="feature-options-list">
+            <div class="option-item" onclick="selectOption(event, 'Enterprise Architect track')">
+              <div class="option-text">Enterprise Architect track</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'SAP integration specialist')">
+              <div class="option-text">SAP integration specialist</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'PLM consultant pathway')">
+              <div class="option-text">PLM consultant pathway</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Custom learning from job trends')">
+              <div class="option-text">Custom learning from job trends</div>
+              <div class="option-arrow">→</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-card" onclick="toggleFeature(this)">
+          <div class="feature-header">
+            <div class="feature-title">
+              <span class="feature-icon">🧭</span>
+              EA Strategy
+            </div>
+            <div class="expand-icon">▼</div>
+          </div>
+          <div class="feature-description">
+            Helps define EA models like federated or agile EA based on organization type and maturity.
+          </div>
+          <div class="feature-options-list">
+            <div class="option-item" onclick="selectOption(event, 'Define federated EA model')">
+              <div class="option-text">Define federated EA model</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Design agile EA approach')">
+              <div class="option-text">Design agile EA approach</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Assess EA maturity')">
+              <div class="option-text">Assess EA maturity</div>
+              <div class="option-arrow">→</div>
+            </div>
+            <div class="option-item" onclick="selectOption(event, 'Create EA governance framework')">
+              <div class="option-text">Create EA governance framework</div>
+              <div class="option-arrow">→</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="explore-more">
+        <div class="explore-header" onclick="toggleExploreMore()">
+          <h2>Explore More Capabilities</h2>
+          <div class="explore-icon">▼</div>
+        </div>
+        <div class="capabilities-container" id="capabilitiesContainer">
+          <div class="capabilities-grid">
+            <div class="capability-card" onclick="toggleCapability(this)">
+              <div class="capability-header">
+                <h3><span>📤</span> Doc Upload & RAG</h3>
+                <div class="capability-expand">▼</div>
+              </div>
+              <div class="capability-content">
+                <p>Upload your documents and use Retrieval-Augmented Generation (RAG) to power context-aware answers.</p>
+                <div class="capability-options">
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Upload enterprise PDFs')">
+                    <span>Upload enterprise PDFs</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Query uploaded documents')">
+                    <span>Query uploaded documents</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'RAG-powered search')">
+                    <span>RAG-powered search</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Context-aware responses')">
+                    <span>Context-aware responses</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="capability-card" onclick="toggleCapability(this)">
+              <div class="capability-header">
+                <h3><span>📖</span> Glossary Assistant</h3>
+                <div class="capability-expand">▼</div>
+              </div>
+              <div class="capability-content">
+                <p>Explain enterprise acronyms and concepts like TOGAF, BOM, RFC instantly.</p>
+                <div class="capability-options">
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Define TOGAF concepts')">
+                    <span>Define TOGAF concepts</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Explain BOM structures')">
+                    <span>Explain BOM structures</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Clarify RFC processes')">
+                    <span>Clarify RFC processes</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Enterprise terminology')">
+                    <span>Enterprise terminology</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="capability-card" onclick="toggleCapability(this)">
+              <div class="capability-header">
+                <h3><span>📐</span> Blueprint Generator</h3>
+                <div class="capability-expand">▼</div>
+              </div>
+              <div class="capability-content">
+                <p>Auto-generate system architecture diagrams based on user prompts.</p>
+                <div class="capability-options">
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Generate ERP diagrams')">
+                    <span>Generate ERP diagrams</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Create PLM blueprints')">
+                    <span>Create PLM blueprints</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Design integration flows')">
+                    <span>Design integration flows</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Architecture templates')">
+                    <span>Architecture templates</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="capability-card" onclick="toggleCapability(this)">
+              <div class="capability-header">
+                <h3><span>📚</span> EA Framework Explorer</h3>
+                <div class="capability-expand">▼</div>
+              </div>
+              <div class="capability-content">
+                <p>Explore major EA frameworks and tools like TOGAF, ArchiMate, Zachman with use case walkthroughs.</p>
+                <div class="capability-options">
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'TOGAF walkthrough')">
+                    <span>TOGAF walkthrough</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'ArchiMate modeling')">
+                    <span>ArchiMate modeling</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Zachman framework')">
+                    <span>Zachman framework</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Framework comparison')">
+                    <span>Framework comparison</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="capability-card" onclick="toggleCapability(this)">
+              <div class="capability-header">
+                <h3><span>🔍</span> Capability Mapper</h3>
+                <div class="capability-expand">▼</div>
+              </div>
+              <div class="capability-content">
+                <p>Visualize business capabilities and link them to systems or EA roadmaps.</p>
+                <div class="capability-options">
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Map business capabilities')">
+                    <span>Map business capabilities</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Link to systems')">
+                    <span>Link to systems</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'EA roadmap alignment')">
+                    <span>EA roadmap alignment</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Capability assessment')">
+                    <span>Capability assessment</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="capability-card" onclick="toggleCapability(this)">
+              <div class="capability-header">
+                <h3><span>🔊</span> EA Chatroom</h3>
+                <div class="capability-expand">▼</div>
+              </div>
+              <div class="capability-content">
+                <p>Join live expert discussions around EA, PLM, ERP, and integration strategy.</p>
+                <div class="capability-options">
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'EA expert discussions')">
+                    <span>EA expert discussions</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'PLM strategy talks')">
+                    <span>PLM strategy talks</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'ERP implementation chat')">
+                    <span>ERP implementation chat</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Integration best practices')">
+                    <span>Integration best practices</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="capability-card" onclick="toggleCapability(this)">
+              <div class="capability-header">
+                <h3><span>🔗</span> EASIHUB Content Insights</h3>
+                <div class="capability-expand">▼</div>
+              </div>
+              <div class="capability-content">
+                <p>Enrich responses using EASIHUB articles, bulletins, and events based on your topic.</p>
+                <div class="capability-options">
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Article recommendations')">
+                    <span>Article recommendations</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Bulletin insights')">
+                    <span>Bulletin insights</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Event suggestions')">
+                    <span>Event suggestions</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Content enrichment')">
+                    <span>Content enrichment</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="capability-card" onclick="toggleCapability(this)">
+              <div class="capability-header">
+                <h3><span>💼</span> Job-Aware Suggestions</h3>
+                <div class="capability-expand">▼</div>
+              </div>
+              <div class="capability-content">
+                <p>Get job recommendations and role insights aligned with your technical questions.</p>
+                <div class="capability-options">
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Job recommendations')">
+                    <span>Job recommendations</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Role insights')">
+                    <span>Role insights</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Skill gap analysis')">
+                    <span>Skill gap analysis</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Career path guidance')">
+                    <span>Career path guidance</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="capability-card" onclick="toggleCapability(this)">
+              <div class="capability-header">
+                <h3><span>📊</span> Learning Path from Market Trends</h3>
+                <div class="capability-expand">▼</div>
+              </div>
+              <div class="capability-content">
+                <p>Generate learning tracks based on skills extracted from real job listings.</p>
+                <div class="capability-options">
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Market trend analysis')">
+                    <span>Market trend analysis</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Skill extraction')">
+                    <span>Skill extraction</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Learning recommendations')">
+                    <span>Learning recommendations</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Industry insights')">
+                    <span>Industry insights</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="capability-card" onclick="toggleCapability(this)">
+              <div class="capability-header">
+                <h3><span>🎓</span> Learning Track</h3>
+                <div class="capability-expand">▼</div>
+              </div>
+              <div class="capability-content">
+                <p>Get guided learning plans for mastering enterprise tools or roles.</p>
+                <div class="capability-options">
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Guided learning plans')">
+                    <span>Guided learning plans</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Enterprise tool mastery')">
+                    <span>Enterprise tool mastery</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Role-specific training')">
+                    <span>Role-specific training</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Progress tracking')">
+                    <span>Progress tracking</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="capability-card" onclick="toggleCapability(this)">
+              <div class="capability-header">
+                <h3><span>📎</span> Document Comparison</h3>
+                <div class="capability-expand">▼</div>
+              </div>
+              <div class="capability-content">
+                <p>Compare versions of documents like specifications or checklists and highlight differences.</p>
+                <div class="capability-options">
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Version comparison')">
+                    <span>Version comparison</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Difference highlighting')">
+                    <span>Difference highlighting</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Specification analysis')">
+                    <span>Specification analysis</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Checklist validation')">
+                    <span>Checklist validation</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="capability-card" onclick="toggleCapability(this)">
+              <div class="capability-header">
+                <h3><span>📅</span> Integration Timeline Helper</h3>
+                <div class="capability-expand">▼</div>
+              </div>
+              <div class="capability-content">
+                <p>Build rollout timelines for ERP/PLM projects with integration checkpoints.</p>
+                <div class="capability-options">
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Project timelines')">
+                    <span>Project timelines</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Integration checkpoints')">
+                    <span>Integration checkpoints</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Milestone tracking')">
+                    <span>Milestone tracking</span>
+                  </div>
+                  <div class="capability-option" onclick="selectCapabilityOption(event, 'Rollout planning')">
+                    <span>Rollout planning</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-cta">
+        <h2>Ready to Transform Your Enterprise Development?</h2>
+        <p>Join thousands of enterprise developers, architects, and consultants using EASIHUB AI</p>
+        <a href="#" class="cta-button">Get Started Free</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleExploreMore() {
+      const header = document.querySelector('.explore-header');
+      const container = document.getElementById('capabilitiesContainer');
+      
+      header.classList.toggle('active');
+      container.classList.toggle('active');
+    }
+
+    function toggleCapability(card) {
+      // Close all other capability cards
+      document.querySelectorAll('.capability-card').forEach(c => {
+        if (c !== card) {
+          c.classList.remove('active');
+        }
+      });
+      
+      // Toggle current card
+      card.classList.toggle('active');
+    }
+
+    function toggleFeature(card) {
+      // Close all other cards
+      document.querySelectorAll('.feature-card').forEach(c => {
+        if (c !== card) {
+          c.classList.remove('active');
+        }
+      });
+      
+      // Toggle current card
+      card.classList.toggle('active');
+    }
+
+    function selectOption(event, optionText) {
+      event.stopPropagation();
+      
+      // Update search box with selected option
+      const searchBox = document.querySelector('.search-box');
+      searchBox.value = optionText;
+      
+      // Add visual feedback
+      const option = event.currentTarget;
+      option.style.background = 'rgba(73, 73, 252, 0.1)';
+      option.style.transform = 'translateY(-2px)';
+      
+      setTimeout(() => {
+        option.style.background = 'rgba(248, 249, 250, 0.8)';
+        option.style.transform = 'translateY(0)';
+      }, 200);
+      
+      // Close the expanded card after selection
+      setTimeout(() => {
+        option.closest('.feature-card').classList.remove('active');
+      }, 500);
+    }
+
+    function selectCapabilityOption(event, optionText) {
+      event.stopPropagation();
+      
+      // Update search box with selected option
+      const searchBox = document.querySelector('.search-box');
+      searchBox.value = optionText;
+      
+      // Add visual feedback
+      const option = event.currentTarget;
+      option.style.background = 'rgba(73, 73, 252, 0.1)';
+      option.style.transform = 'translateY(-2px)';
+      
+      setTimeout(() => {
+        option.style.background = 'rgba(248, 249, 250, 0.8)';
+        option.style.transform = 'translateY(0)';
+      }, 200);
+      
+      // Close the expanded card after selection
+      setTimeout(() => {
+        option.closest('.capability-card').classList.remove('active');
+      }, 500);
+    }
+
+    function handleSearch() {
+      const searchValue = document.querySelector('.search-box').value;
+      if (searchValue.trim()) {
+        // Simulate search action
+        const paperIcon = document.querySelector('.paper-icon');
+        const svg = paperIcon.querySelector('svg');
+        
+        paperIcon.style.transform = 'translateY(-50%) scale(1.1)';
+        paperIcon.style.background = '#3333e6';
+        
+        // Animate the send icon
+        svg.style.transform = 'translateX(3px)';
+        
+        setTimeout(() => {
+          paperIcon.style.transform = 'translateY(-50%) scale(1)';
+          paperIcon.style.background = '#4949fc';
+          svg.style.transform = 'translateX(0)';
+          alert('Search functionality would be implemented here: ' + searchValue);
+        }, 1000);
+      }
+    }
+
+    // Add enter key support for search
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelector('.search-box').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          handleSearch();
+        }
+      });
+
+      // Add subtle animation on scroll
+      window.addEventListener('scroll', function() {
+        const cards = document.querySelectorAll('.feature-card, .capability-card');
+        cards.forEach(card => {
+          const rect = card.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            card.style.transform = 'translateY(0)';
+            card.style.opacity = '1';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
