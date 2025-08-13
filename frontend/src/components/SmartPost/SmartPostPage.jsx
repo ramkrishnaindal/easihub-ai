@@ -10,8 +10,9 @@ const SmartPostPage = () => {
   };
 
   const handleStartManual = () => {
-    // Navigate to new topic page since we don't have a popup
-    window.location.href = '/new-topic';
+    // Redirect to Discourse new topic page in new tab
+    const baseUrl = process.env.REACT_APP_DISCOURSE_BASE_URL || 'https://easihub.com';
+    window.open(`${baseUrl}/new-topic`, '_blank');
   };
 
   return (
