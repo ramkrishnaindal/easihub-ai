@@ -15,6 +15,41 @@ app.use(express.json());
 // Serve static files from React build
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
+// Helper function to validate and improve tags using OpenAI
+async function validateTagsWithAI(tags, title, content) {
+  if (!tags || tags.length === 0) return [];
+  
+  try {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-3.5-turbo',
+        messages: [{
+          role: 'user',
+          content: `Given this post title: "${title}" and content: "${content.substring(0, 500)}...", validate and improve these tags: ${tags.join(', ')}. Return only valid, relevant tags for enterprise software topics (ERP, CRM, PLM, etc.), lowercase, hyphenated, max 5 tags. Format as comma-separated list.`
+        }],
+        max_tokens: 100,
+        temperature: 0.3
+      })
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      const aiTags = data.choices[0].message.content.trim().split(',').map(tag => tag.trim().toLowerCase());
+      return aiTags.slice(0, 5); // Max 5 tags
+    }
+  } catch (error) {
+    console.warn('AI tag validation failed:', error.message);
+  }
+  
+  // Fallback to original tags if AI fails
+  return tags.map(tag => tag.toLowerCase().replace(/\s+/g, '-'));
+}
+
 // Helper function to create tags if they don't exist
 async function createTagsIfNeeded(tags) {
   if (!tags || tags.length === 0) return [];
@@ -44,8 +79,10 @@ async function createTagsIfNeeded(tags) {
 
 app.post('/api/posts', async (req, res) => {
   try {
-    // Create tags first if provided
-    const validTags = await createTagsIfNeeded(req.body.tags);
+    // Validate and improve tags with AI first
+    const aiValidatedTags = await validateTagsWithAI(req.body.tags, req.body.title, req.body.raw);
+    // Create tags in Discourse
+    const validTags = await createTagsIfNeeded(aiValidatedTags);
     
     const payload = {
       title: req.body.title,
