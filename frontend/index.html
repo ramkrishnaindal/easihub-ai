@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./front-end-ui-css.css">
+</head>
+<body>
+    <div id="aiPanelContainer" class="ai-panel-container">
+      <div class="ai-header">
+        <span>
+          Welcome to EASIHUB AI ✨ (Meet <strong>EASIBOT</strong>)
+        </span>
+        <span class="close-btn" id="closeAiPanelBtn" title="Close">
+          –
+        </span>
+      </div>
+
+      <div class="ai-panel-content" id="aiPanelContent">
+        <!-- {/* Landing Page */} -->
+        <div id="landingPage" class="ai-content-section">
+          <div class="main-landing-container">
+            <h1 id="greeting">Welcome 👋</h1>
+            <div class="ai-hero-section">
+              <h2 class="ai-intro-headline">
+                Meet <span class="highlight">EASIBOT</span>
+              </h2>
+              <div class="ai-intro-wrapper">
+                <p class="ai-intro-subtitle">
+                  Your AI-powered assistant for ERP, CRM, PLM, SCM, BI, HCM &
+                  more — crafted to help you explore, contribute, and grow on
+                  <span class="highlight">EASIHUB</span>. From structured post
+                  creation to smart documentation and AI-driven search, EASIBOT
+                  accelerates your enterprise learning journey.
+                </p>
+                <img
+                  src="https://cdn.easihub.com/uploads/default/original/1X/6244acc629fbf32028dd7c3558961b975bde2628.jpeg"
+                  alt="EASIBOT Avatar"
+                  class="easihub-avatar"
+                />
+              </div>
+            </div>
+            <div class="ai-grid">
+              <div
+                class="ai-option"
+                data-page="smartPostPage"
+                title="Auto-generate structured posts with titles, tags, and descriptions."
+              >
+                <i class="fas fa-pen"></i> Smart Post
+              </div>
+              <div
+                class="ai-option"
+                data-page="searchAssistPage"
+                title="Explore community wisdom, bulletins, and enterprise insights with AI."
+              >
+                <i class="fas fa-search"></i> Search Assist
+              </div>
+              <div
+                class="ai-option"
+                data-page="copilotPage"
+                title="Get step-by-step help, onboarding tips, and quick actions."
+              >
+                <i class="fas fa-comments"></i> Copilot
+              </div>
+              <div
+                class="ai-option"
+                data-page="askDocsPage"
+                title="Search within documentation and get summarized answers."
+              >
+                <i class="fas fa-file-alt"></i> Ask with Docs
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- {/* Tabbed panel structure (hidden by default, shown after landing) */} -->
+        <div id="tabbedPages" >
+          <div class="ai-top-tabs" id="mainTabs">
+            <div
+              class="ai-tab"
+              id="tab-smartPostPage"
+              data-page="smartPostPage"
+            >
+              📝 Smart Post
+            </div>
+            <div
+              class="ai-tab"
+              id="tab-searchAssistPage"
+              data-page="searchAssistPage"
+            >
+              🔍 Search Assist
+            </div>
+            <div class="ai-tab" id="tab-copilotPage" data-page="copilotPage">
+              💬 Copilot
+            </div>
+            <div class="ai-tab" id="tab-askDocsPage" data-page="askDocsPage">
+              📘 Ask with Docs
+            </div>
+          </div>
+          <!-- {/* Smart Post Page */} -->
+          <div
+            id="smartPostPage"
+            class="ai-content-section"
+            
+          >
+            <div class="launcher-panel" id="launcherPanel">
+              <div class="sparkle" style="top: 50px; left: 8%;">
+                ✨
+              </div>
+              <div class="sparkle" style="top: 140px; right: 12%;">
+                ✨
+              </div>
+              <div class="sparkle" style="bottom: 160px; left: 20%;">
+                ✨
+              </div>
+              <div class="sparkle" style="bottom: 100px; right: 28%;">
+                ✨
+              </div>
+              <div class="sparkle" style="top: 320px; left: 48%;">
+                ✨
+              </div>
+              <h1>Let's begin your next post!</h1>
+              <p>
+                Use the power of AI to guide you through posting questions,
+                jobs, or use cases quickly and easily.
+              </p>
+              <button class="btn-get-started" onclick="startPostingAI()">
+                Get started using AI
+              </button>
+              <button class="btn-without-ai" onclick="startPostingManual()">
+                I'll do it without AI
+              </button>
+              <div class="disclaimer">
+                Beta feature powered by EASIBOT (uses OpenAI API). Your use of
+                this feature will be subject to{" "}
+                <a
+                  href="https://openai.com/policies/usage-policies"
+                  target="_blank"
+                >
+                  OpenAI's Usage Policy
+                </a>
+                and our <a href="#">Privacy Terms</a>.
+              </div>
+            </div>
+            <div id="smartPostSteps" style="display: none;">
+              <div class="ai-sub-tabs">
+                <div
+                  class="ai-tab active"
+                  onclick="switchSmartStep(event, 'create')"
+                >
+                  📝 Create Topic
+                </div>
+                <div
+                  class="ai-tab disabled"
+                  onclick="switchSmartStep(event, 'describe')"
+                >
+                  📄 Describe Topic
+                </div>
+                <div
+                  class="ai-tab disabled"
+                  onclick="switchSmartStep(event, 'submit')"
+                >
+                  ✅ Review & Submit
+                </div>
+              </div>
+              <div
+                id="smartStepCreate"
+                class="smart-post-card"
+                style="display: block;"
+              >
+                <div class="select-type">
+                  <div class="sparkle" style="top: 50px; left: 2%;">
+                    ✨
+                  </div>
+                  <div class="sparkle" style="top: 140px; right: 4%;">
+                    ✨
+                  </div>
+                  <div class="sparkle" style="bottom: 160px; left: 20%;">
+                    ✨
+                  </div>
+                  <div class="sparkle" style="bottom: 100px; right: 28%;">
+                    ✨
+                  </div>
+                  <div class="sparkle" style="top: 320px; left: 48%;">
+                    ✨
+                  </div>
+                  <div
+                    class="title-input"
+                    id="titleInputBox"
+                    style="display:flex; flex-direction: column; justify-content: center; align-items: center; font-size: 16px;"
+                  >
+                    <label class="title-header">
+                      <strong>Give your post a title:</strong>
+                    </label>
+                    <input
+                      type="text"
+                      id="postTitle"
+                      placeholder=""
+                      style="width: 90%; max-width: 600px; padding: 0.75rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 8px; margin-top: 0.5rem;"
+                    />
+                  </div>
+                  <div class="card-grid">
+                    <div
+                      class="card"
+                      onclick="selectCard(this, 'Question')"
+                      title="Ask about issues in ERP, PLM, CRM, or other enterprise platforms"
+                    >
+                      <div class="checkmark"></div>
+                      <h3>
+                        <i class="fas fa-question-circle icon"></i> Ask Question
+                      </h3>
+                      <p>
+                        Get help from the EASIHUB community on implementation
+                        errors, integration bugs, or deployment issues.
+                      </p>
+                    </div>
+                    <div
+                      class="card"
+                      onclick="selectCard(this, 'Use Case')"
+                      title="Describe enterprise software customization, configuration, or integrations you've implemented"
+                    >
+                      <div class="checkmark"></div>
+                      <h3>
+                        <i class="fas fa-briefcase icon"></i> Use Case
+                      </h3>
+                      <p>
+                        Share practical examples of how enterprise software is
+                        customized, configured, or deployed.
+                      </p>
+                    </div>
+                    <div
+                      class="card"
+                      onclick="selectCard(this, 'Discussion')"
+                      title="Start a debate or collect feedback on architectural or process choices"
+                    >
+                      <div class="checkmark"></div>
+                      <h3>
+                        <i class="fas fa-comments icon"></i> Discussion
+                      </h3>
+                      <p>
+                        Engage peers in discussions around best practices,
+                        trade-offs, or architecture decisions in enterprise
+                        systems.
+                      </p>
+                    </div>
+                    <div
+                      class="card"
+                      onclick="selectCard(this, 'Article')"
+                      title="Share insights, how-to guides, or tutorials for the EASIHUB community"
+                    >
+                      <div class="checkmark"></div>
+                      <h3>
+                        <i class="fas fa-file-alt icon"></i> Article
+                      </h3>
+                      <p>
+                        Contribute deep-dive articles or tutorials on enterprise
+                        software, use cases, or tool comparisons.
+                      </p>
+                    </div>
+                    <div
+                      class="card"
+                      onclick="selectCard(this, 'Job')"
+                      title="Post enterprise tech jobs such as ERP consultants or PLM architects"
+                    >
+                      <div class="checkmark"></div>
+                      <h3>
+                        <i class="fas fa-briefcase-medical icon"></i> Job
+                      </h3>
+                      <p>
+                        List open positions related to ERP, PLM, CRM, or
+                        enterprise tech roles your team is hiring for.
+                      </p>
+                    </div>
+                    <div
+                      class="card"
+                      onclick="selectCard(this, 'Event')"
+                      title="Promote community events, webinars, or training sessions"
+                    >
+                      <div class="checkmark"></div>
+                      <h3>
+                        <i class="fas fa-calendar-alt icon"></i> Event
+                      </h3>
+                      <p>
+                        Announce upcoming webinars, user group sessions, or tech
+                        conferences relevant to enterprise platforms.
+                      </p>
+                    </div>
+                    <div
+                      class="card"
+                      onclick="selectCard(this, 'Bulletin')"
+                      title="Publish system announcements, vendor updates, or release alerts"
+                    >
+                      <div class="checkmark"></div>
+                      <h3>
+                        <i class="fas fa-bullhorn icon"></i> Bulletin
+                      </h3>
+                      <p>
+                        Share vendor release notes, patch advisories, or
+                        important updates affecting enterprise software users.
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="button-row"
+                    style="text-align:center; margin-top: 2rem;"
+                  >
+                    <button
+                      class="nav-btn"
+                      id="toStep2"
+                      disabled
+                      onclick="handleNext()"
+                    >
+                      Next →
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                id="smartStepDescribe"
+                class="smart-post-card"
+                style="display: none;"
+              >
+                <div class="step">
+                  <h2 class="heading" id="step2Header">
+                    Step 2 – Describe Your Post
+                  </h2>
+                  <div id="step2Fields"></div>
+                  <div class="button-row">
+                    <button class="nav-btn" onclick="handleBackDesc()">
+                      ← Back
+                    </button>
+                    <button
+                      class="nav-btn"
+                      id="toStep3"
+                      disabled
+                      onclick="handleNextDesc()"
+                    >
+                      Next →
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                id="smartStepSubmit"
+                class="smart-post-card"
+                style="display: none;"
+              >
+                <div class="step">
+                  <h2 class="heading">Review & Submit</h2>
+                  <div class="review-box">
+                    <p>
+                      <strong>Post Type:</strong> <span id="reviewType"></span>
+                    </p>
+                    <p>
+                      <strong>Title:</strong> <span id="reviewTitle"></span>{" "}
+                      <span class="edit-btn active" data-edit="title">
+                        Edit
+                      </span>
+                    </p>
+                    <div class="desc-container">
+                      <p>
+                        <strong>Description:</strong>
+                      </p>
+                      <div class="desc-content">
+                        <p id="reviewDesc" style="white-space:pre-wrap;"></p>
+                        <span
+                          class="edit-btn active"
+                          id="editBtn"
+                          data-edit="desc"
+                        >
+                          Edit
+                        </span>
+                      </div>
+                    </div>
+                    <p>
+                      <strong>Domain:</strong> <span>(AI detected)</span>
+                    </p>
+                    <p>
+                      <strong>Software:</strong> <span>(AI detected)</span>
+                    </p>
+                    <p>
+                      <strong>Technical Area:</strong>{" "}
+                      <span>(AI detected)</span>
+                    </p>
+                    <p>
+                      <strong>Tags:</strong> <span>(auto-generated)</span>
+                    </p>
+                  </div>
+                  <div class="button-row">
+                    <button class="nav-btn" onclick="handleBack()">
+                      ← Back
+                    </button>
+                    <button class="nav-btn" onclick="submitPost()">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- {/* Search Assist Page */} -->
+          <div
+            id="searchAssistPage"
+            class="ai-content-section"
+            style="display:none;"
+          >
+            <div class="ai-body">
+              <div id="answers"></div>
+              <div id="chat-container">
+                <form id="question-form">
+                  <input
+                    id="question-input"
+                    type="text"
+                    placeholder="Ask something..."
+                    autocomplete="off"
+                  />
+                  <button type="submit" id="ask-btn">
+                    Ask
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          {/* <!-- Copilot Page --> */}
+          <div
+            id="copilotPage"
+            class="ai-content-section"
+            style="display:none;"
+          >
+            <div class="ai-body">
+              <div class="chat-container">
+                <div class="chat-header">
+                  <h2>
+                    You're talking with <strong>EASIbot</strong>
+                  </h2>
+                  <span>ENTERPRISE AI</span>
+                </div>
+                <div class="chat-body">
+                  <div class="chat-message-ai">
+                    <h3>Hi there!</h3>
+                    <p>
+                      Welcome to <strong>EASIHUB</strong>!
+                    </p>
+                    <p>
+                      You're now talking with <strong>EASIbot</strong> — your
+                      exclusive AI companion, purpose-built for enterprise
+                      application professionals.
+                    </p>
+                    <p>
+                      Whether you're a{" "}
+                      <strong>
+                        developer, consultant, architect, or project manager
+                      </strong>
+                      , I'm here to help you:
+                    </p>
+                    <ul class="custom-list">
+                      <li>
+                        Find solutions across ERP, CRM, PLM, SCM, MES, HCM, and
+                        more
+                      </li>
+                      <li>Break down complex implementation questions</li>
+                      <li>
+                        Guide you to the right use cases, discussions, or expert
+                        threads
+                      </li>
+                      <li>
+                        Or just spark new ideas as you explore your enterprise
+                        tech stack
+                      </li>
+                    </ul>
+                    <p>
+                      <em>
+                        I'm still an experimental AI, so please go easy on me,
+                        but I'm learning quickly and will keep getting better
+                        with time!
+                      </em>
+                    </p>
+                    <p>
+                      💡 Unlike general-purpose AIs, I'm trained exclusively on
+                      enterprise software topics. So go ahead—ask me about APIs,
+                      upgrades, workflows, or integration!
+                    </p>
+                    <p>
+                      🛠️ Powered by <strong>EASIHUB</strong> — built for
+                      enterprise minds like yours.
+                    </p>
+                  </div>
+                  <div class="chat-image">
+                    <img
+                      src="https://cdn.easihub.com/uploads/default/original/1X/712760a2a2948e30b7e889b5ded00d990ebbcd41.jpeg"
+                      alt="EASIbot"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="chat-body"
+                  id="copilotChatBody"
+                  style="flex-direction: column;"
+                >
+                  {/* <!-- Chat bubbles will be appended here --> */}
+                </div>
+                <div class="chat-input">
+                  <input
+                    type="text"
+                    id="copilotInput"
+                    placeholder="Ask me anything ..."
+                  />
+                  <button type="button" id="copilotSendBtn">
+                    Send ✈️
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- {/* Ask with Docs Page */} -->
+          <div
+            id="askDocsPage"
+            class="ai-content-section"
+            style="display:none;"
+          >
+            <div class="ai-body">
+              <div id="aiResponseDocs"></div>
+              <div id="chat-container">
+                <form id="ask-docs">
+                  <input
+                    class="ai-input"
+                    id="aiPromptDocs"
+                    placeholder="Ask about documentation..."
+                  />
+                  <button class="ai-submit" type="submit" id="aiSubmitDocs">
+                    Submit
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-overlay" id="editModal" style="display: none;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Let's make some edits.</h2>
+            <button class="close-btn" onclick="closeModal()">
+              &times;
+            </button>
+          </div>
+          <div class="action-buttons">
+            <button class="action-button">
+              <i class="fa fa-smile"></i> Make it casual
+            </button>
+            <button class="action-button">
+              <i class="fa fa-briefcase"></i> Make it formal
+            </button>
+            <button class="action-button">
+              <i class="fa fa-scissors"></i> Shorten it
+            </button>
+            <div style="display: flex; flex: 1 auto; gap: 8px;">
+              <button class="action-button">
+                <i class="fa fa-list-alt"></i> Add more details
+              </button>
+              <button class="action-button">
+                <i class="fa fa-redo"></i> Rewrite it
+              </button>
+            </div>
+          </div>
+          <div class="modal-body">
+            <textarea placeholder="Review and edit your topic content here..."></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="save-btn">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
