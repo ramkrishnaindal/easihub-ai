@@ -15,6 +15,37 @@ app.use(express.json());
 // Serve static files from React build
 app.use(express.static(path.join(__dirname, 'frontend/build')));
 
+app.post('/api/posts', async (req, res) => {
+  try {
+    const payload = {
+      title: req.body.title,
+      raw: req.body.raw,
+      category: req.body.category,
+      archetype: 'regular'
+    };
+
+    const response = await fetch('https://easihub.com/posts.json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Api-Key': process.env.DISCOURSE_API_KEY,
+        'Api-Username': process.env.DISCOURSE_API_USERNAME,
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      return res.status(response.status).json({ error: 'Failed to create topic', details: errorText });
+    }
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.post('/api/chat/stream', async (req, res) => {
   try {
     console.log('Request body:', req.body);
